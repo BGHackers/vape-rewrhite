@@ -3203,14 +3203,13 @@ local bottomChildren = {
 		DragPoint,
 		WindowStuff
 	}), "Main")
-
-	-- ==========================================
+-- ==========================================
 	-- ★ MainWindowへのレインボーグラデーション枠線（Stroke）追加
 	-- ==========================================
 	local RainbowStroke = Instance.new("UIStroke")
-	RainbowStroke.Thickness = 3.5  -- 枠線の太さ
+	RainbowStroke.Thickness = 2  -- ★太さを細めに変更（さらにお好みに応じて 1.5 や 1 に下げても綺麗です）
 	RainbowStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	RainbowStroke.Color = Color3.fromRGB(255, 255, 255) -- ★最重要：ここを白に設定することで、グラデーションが真っ黒になるのを防ぎます
+	RainbowStroke.Color = Color3.fromRGB(255, 255, 255) -- ベースを白に固定してグラデーションを表示
 	RainbowStroke.Parent = MainWindow
 
 	local RainbowGradient = Instance.new("UIGradient")
@@ -3237,7 +3236,8 @@ local bottomChildren = {
 		local angle = (tick() * 45) % 360
 		RainbowGradient.Rotation = angle
 	end)
-	-- =========================================================
+	-- ==========================================
+	-- ==========================================
 
 	if WindowConfig.ShowIcon then
 		WindowName.Position = UDim2.new(0, 50, 0, -24)

@@ -3205,12 +3205,24 @@ local bottomChildren = {
 	}), "Main")
 
 	-- ==========================================
-	-- ★ MainWindowへのレインボー枠線（Stroke）追加
+	-- ★ MainWindowへのレインボーグラデーション枠線（Stroke）追加
 	-- ==========================================
 	local RainbowStroke = Instance.new("UIStroke")
-	RainbowStroke.Thickness = 2  -- 線の太さ（お好みで変更可能）
+	RainbowStroke.Thickness = 3.5  -- 太さを少しアップ
 	RainbowStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	RainbowStroke.Parent = MainWindow
+
+	local RainbowGradient = Instance.new("UIGradient")
+	RainbowGradient.Color = ColorSequence.new({
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),      -- 赤
+		ColorSequenceKeypoint.new(0.16, Color3.fromRGB(255, 127, 0)),  -- 橙
+		ColorSequenceKeypoint.new(0.33, Color3.fromRGB(255, 255, 0)),  -- 黄
+		ColorSequenceKeypoint.new(0.49, Color3.fromRGB(0, 255, 0)),    -- 緑
+		ColorSequenceKeypoint.new(0.66, Color3.fromRGB(0, 0, 255)),    -- 青
+		ColorSequenceKeypoint.new(0.82, Color3.fromRGB(139, 0, 255)),  -- 紫
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0))        -- 赤（ループ用）
+	})
+	RainbowGradient.Parent = RainbowStroke
 
 	local rainbowConnection
 	rainbowConnection = RunService.RenderStepped:Connect(function()
@@ -3220,9 +3232,9 @@ local bottomChildren = {
 			end
 			return
 		end
-		-- 4秒かけて色相（Hue）が1周するアニメーション
-		local hue = (tick() % 4) / 4
-		RainbowStroke.Color = Color3.fromHSV(hue, 1, 1)
+		-- スピードを遅く調整（約8秒で1周：45度/秒）
+		local angle = (tick() * 45) % 360
+		RainbowGradient.Rotation = angle
 	end)
 	-- ==========================================
 
